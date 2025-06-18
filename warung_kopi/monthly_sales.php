@@ -30,18 +30,31 @@
               <th class="text-center" style="width: 50px;">#</th>
               <th>Nama Produk</th>
               <th class="text-center" style="width: 15%;">Jumlah Terjual</th>
-              <th class="text-center" style="width: 15%;">Total</th>
-              <th class="text-center" style="width: 15%;">Tanggal</th>
+              <th class="text-center" style="width: 15%;">Total Harga Jual</th>
+              <th class="text-center" style="width: 15%;">Bulan & Tahun</th>
             </tr>
           </thead>
           <tbody>
-            <?php foreach ($sales as $sale): ?>
+            <?php 
+              // PERBAIKAN 1: Buat variabel counter untuk penomoran baris
+              $i = 1; 
+              foreach ($sales as $sale): 
+            ?>
             <tr>
-              <td class="text-center"><?php echo count_id(); ?></td>
-              <td><?php echo remove_junk($sale['name']); ?></td>
-              <td class="text-center"><?php echo (int)$sale['qty']; ?></td>
+              <?php // PERBAIKAN 2: Gunakan counter, bukan fungsi count_id() ?>
+              <td class="text-center"><?php echo $i++; ?></td>
+              
+              <?php // PERBAIKAN 3: Ganti key dari 'name' menjadi 'product_name' ?>
+              <td><?php echo remove_junk($sale['product_name']); ?></td>
+              
+              <?php // PERBAIKAN 4: Ganti key dari 'qty' menjadi 'total_qty' ?>
+              <td class="text-center"><?php echo (int)$sale['total_qty']; ?></td>
+              
+              <?php // Key ini sudah benar (meskipun ada typo di fungsi aslinya) ?>
               <td class="text-center"><?php echo remove_junk($sale['total_saleing_price']); ?></td>
-              <td class="text-center"><?php echo $sale['date']; ?></td>
+              
+              <?php // PERBAIKAN 5: Ganti 'date' menjadi 'month_year' atau 'bulan' ?>
+              <td class="text-center"><?php echo $sale['month_year']; ?></td>
             </tr>
             <?php endforeach; ?>
           </tbody>

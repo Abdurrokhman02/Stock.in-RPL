@@ -7,6 +7,9 @@
  /*--------------------------------------------------------------*/
 function real_escape($str){
   global $con;
+  // Catatan: Fungsi ini sepertinya tidak digunakan dan mengacu pada variabel $con
+  // yang mungkin tidak terdefinisi secara global.
+  // Sebaiknya gunakan method $db->escape() yang sudah ada.
   $escape = mysqli_real_escape_string($con,$str);
   return $escape;
 }
@@ -15,7 +18,8 @@ function real_escape($str){
 /*--------------------------------------------------------------*/
 function remove_junk($str){
   $str = nl2br($str);
-  $str = htmlspecialchars(strip_tags($str, ENT_QUOTES));
+  // PERBAIKAN: Memindahkan ENT_QUOTES ke fungsi yang benar (htmlspecialchars)
+  $str = htmlspecialchars(strip_tags($str), ENT_QUOTES);
   return $str;
 }
 /*--------------------------------------------------------------*/
@@ -34,10 +38,12 @@ function validate_fields($var){
   foreach ($var as $field) {
     $val = remove_junk($_POST[$field]);
     if(isset($val) && $val==''){
-      $errors = $field ." can't be blank.";
-      return $errors;
+      // Tambahkan error ke dalam array, jangan timpa array-nya
+      $errors[] = $field ." tidak boleh kosong.";
     }
   }
+  // Return setelah semua field diperiksa
+  return $errors;
 }
 /*--------------------------------------------------------------*/
 /* Function for Display Session Message
@@ -73,11 +79,13 @@ function redirect($url, $permanent = false)
 function total_price($totals){
    $sum = 0;
    $sub = 0;
+   $profit = 0; // Inisialisasi di sini
    foreach($totals as $total ){
      $sum += $total['total_saleing_price'];
      $sub += $total['total_buying_price'];
-     $profit = $sum - $sub;
    }
+   // Hitung profit SETELAH semua total dijumlahkan
+   $profit = $sum - $sub; 
    return array($sum,$profit);
 }
 /*--------------------------------------------------------------*/
@@ -93,7 +101,8 @@ function read_date($str){
 /* Function for  Readable Make date time
 /*--------------------------------------------------------------*/
 function make_date(){
-  return strftime("%Y-%m-%d %H:%M:%S", time());
+  // PERBAIKAN: Mengganti strftime() yang sudah usang dengan date()
+  return date("Y-m-d H:i:s");
 }
 /*--------------------------------------------------------------*/
 /* Function for  Readable date time
@@ -111,9 +120,9 @@ function randString($length = 5)
   $cha = "0123456789abcdefghijklmnopqrstuvwxyz";
 
   for($x=0; $x<$length; $x++)
-   $str .= $cha[mt_rand(0,strlen($cha))];
+   // PERBAIKAN: Mengurangi 1 dari strlen untuk menghindari error offset
+   $str .= $cha[mt_rand(0,strlen($cha)-1)];
   return $str;
 }
-
 
 ?>
