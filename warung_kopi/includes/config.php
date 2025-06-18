@@ -1,4 +1,5 @@
 <?php
+  date_default_timezone_set('Asia/Jakarta');
 
   define( 'DB_HOST', 'localhost' );          // Set database host
   define( 'DB_USER', 'root' );             // Set database user

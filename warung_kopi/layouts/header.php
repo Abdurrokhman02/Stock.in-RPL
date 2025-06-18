@@ -16,7 +16,10 @@
   <body>
   <?php  if ($session->isUserLoggedIn(true)): ?>
     <header id="header">
-      <div class="logo pull-left"> Stock.In <img src="../stock.in-dev/uploads/users/logo.png" width="100" alt=""></div>      
+      <div class="logo pull-left" style="display: flex; align-items: center; padding-left: 20px;">
+        <img src="uploads/users/logo.png" alt="Logo" width="45" style="margin-right: 10px;">
+        <span style="font-size: 22px;">Stock.In</span>
+      </div>      
       <div class="header-content">
       <div class="header-date pull-left">
         <strong><?php echo date("F j, Y, g:i a");?></strong>
